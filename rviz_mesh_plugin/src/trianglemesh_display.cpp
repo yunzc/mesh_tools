@@ -178,6 +178,15 @@ TriangleMeshDisplay::TriangleMeshDisplay()
         this
     );
 
+    m_cullFaces = new rviz::BoolProperty(
+        "Cull Faces",
+        true,
+        "Cull Faces",
+        this,
+        SLOT(updateMesh()),
+        this
+    );
+
     m_normalsColor = new rviz::ColorProperty(
         "Normals Color",
         QColor(255, 0, 255),
@@ -334,6 +343,7 @@ void TriangleMeshDisplay::updateMesh()
 
     bool showWireframe = m_showWireframe->getBool();
     bool showNormals = m_showNormals->getBool();
+    bool cullFaces = m_cullFaces->getBool();
     bool showFaces = false;
     bool showTextures = false;
     bool useVertexColors = false;
@@ -365,7 +375,7 @@ void TriangleMeshDisplay::updateMesh()
             showWireframe, m_wireframeColor->getOgreColor(), m_wireframeAlpha->getFloat(),
             showFaces, m_facesColor->getOgreColor(), m_facesAlpha->getFloat(), useVertexColors, false,
             showTextures,
-            showNormals, m_normalsColor->getOgreColor(), m_normalsAlpha->getFloat(), m_scalingFactor->getFloat()
+            showNormals, m_normalsColor->getOgreColor(), m_normalsAlpha->getFloat(), m_scalingFactor->getFloat(), cullFaces
         );
       }
     }

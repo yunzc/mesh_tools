@@ -149,7 +149,8 @@ namespace rviz_mesh_plugin
     Ogre::Pass* pass,
     Ogre::ColourValue facesColor,
     float facesAlpha,
-    bool useVertexColors
+    bool useVertexColors,
+    bool cullFaces
   ){
 
     pass->setDiffuse(
@@ -173,7 +174,11 @@ namespace rviz_mesh_plugin
       pass->setDepthWriteEnabled(false);
     }
     pass->setPolygonMode(Ogre::PM_SOLID);
-    pass->setCullingMode(Ogre::CULL_NONE);
+    if (cullFaces) {
+      pass->setCullingMode(Ogre::CULL_CLOCKWISE);
+    } else {
+      pass->setCullingMode(Ogre::CULL_NONE);
+    }
   }
 
   void TriangleMeshVisual::showNormals(
@@ -218,7 +223,8 @@ namespace rviz_mesh_plugin
         bool showNormals,
         Ogre::ColourValue normalsColor,
         float normalsAlpha,
-        float normalsScalingFactor)
+        float normalsScalingFactor,
+        bool cullFaces)
   {
     // remove all passes
     if (!m_meshGeneralMaterial.isNull()){
@@ -244,7 +250,7 @@ namespace rviz_mesh_plugin
       Ogre::Technique* tech = m_meshGeneralMaterial->getTechnique(0);
 
       if (showFaces){
-        this->showFaces(tech->createPass(), facesColor, facesAlpha, useVertexColors);
+        this->showFaces(tech->createPass(), facesColor, facesAlpha, useVertexColors, cullFaces);
       }
 
       if (showWireframe){
@@ -260,7 +266,7 @@ namespace rviz_mesh_plugin
       Ogre::Technique* tech = m_meshColoredTrianglesMaterial->getTechnique(0);
 
       if (showFaces){
-        this->showFaces(tech->createPass(), facesColor, facesAlpha, true);
+        this->showFaces(tech->createPass(), facesColor, facesAlpha, true, cullFaces);
       }
 
       if (showWireframe){

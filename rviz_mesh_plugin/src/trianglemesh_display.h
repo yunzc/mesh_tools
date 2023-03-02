@@ -241,6 +241,8 @@ private:
     /// Property to select the normals
     rviz::BoolProperty* m_showNormals;
 
+    /// Property to cull faces
+    rviz::BoolProperty* m_cullFaces;
 };
 } // End namespace rviz_mesh_plugin
 

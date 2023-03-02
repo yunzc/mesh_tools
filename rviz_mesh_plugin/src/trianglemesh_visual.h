@@ -145,6 +145,7 @@ public:
      * @param normalsColor          The color of the normals
      * @param normalsAlpha          The transparency of the normals
      * @param normalsScallingFactor The size of the normals
+     * @param cullFaces             When TRUE backfaces are culled
      */
     void updateMaterial(bool showWireframe,
       Ogre::ColourValue wireframeColor,
@@ -158,7 +159,8 @@ public:
       bool showNormals,
       Ogre::ColourValue normalsColor,
       float normalsAlpha,
-      float normalsScallingFactor);
+      float normalsScallingFactor,
+      bool cullFaces);
 
     /**
      * @brief Updates the size of the normals dynamically.
@@ -178,7 +180,8 @@ private:
       Ogre::Pass* pass,
       Ogre::ColourValue facesColor,
       float facesAlpha,
-      bool useVertexColors);
+      bool useVertexColors,
+      bool cullFaces);
 
     void showNormals(
       Ogre::Pass* pass,
